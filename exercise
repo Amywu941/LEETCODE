@@ -1,0 +1,117 @@
+#给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+#你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
+#示例:
+#给定 nums = [2, 7, 11, 15], target = 9
+#因为 nums[0] + nums[1] = 2 + 7 = 9
+#所以返回 [0, 1]
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        len_n = len(nums)
+        for i in range(len_n):
+            out = target - nums[i]
+            if out in nums and nums.index(out) !=i:
+                out_index = nums.index(out)
+                list_ =[]
+                list_.append(i)
+                list_.append(out_index)
+                return list_
+ #给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+
+#示例 1:
+
+#输入: "abcabcbb"
+#输出: 3 
+#解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        m_ = list(s)
+        len_m  = len(m_)
+        if len_m ==0:
+            return '0'
+        else:
+            max_ = 1
+            for i in range(len_m):
+                for j in range(len_m-i+1):
+                    if len(set(m_[i:i+j]))==len(m_[i:i+j]):
+                        if j > max_:
+                            max_ = j
+            return max_
+ #将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+#比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：
+#L   C   I   R
+#E T O E S I I G
+#E   D   H   N
+#之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："LCIRETOESIIGEDHN"。
+#请你实现这个将字符串进行指定行数变换的函数：
+
+#string convert(string s, int numRows);
+
+#示例 1:
+#
+#输入: s = "LEETCODEISHIRING", numRows = 3
+#输出: "LCIRETOESIIGEDHN"
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        l_s = len(s)
+        if l_s <=1:
+            return s
+        else:
+            q = 0
+            num = 0
+            s_ = ''
+            while numRows > 0: 
+                inter2 = 2*num
+                p = q
+                inter1 = 2 * (numRows - 1) #两个间隔
+                if p<l_s:
+                    s_ += s[p]
+                if inter1==0 and inter2==0:
+                    return s
+                else:
+                    while p < l_s:
+                        if inter1 >0 and (p+inter1 )< l_s:
+                            s_ += s[p+inter1]
+                        if inter2 >0 and (p + inter1+inter2) < l_s:
+                            s_ +=(s[p + inter1+inter2])
+                        p += inter1+inter2
+                numRows = numRows - 1
+                num +=1
+                q +=1
+            return s_
+  #给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+#示例 1:
+#输入: 123
+#输出: 321
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        m = 0
+        s= str(x)
+        l = list(s)
+        h = 1
+        if l[0]=='-':
+            h = -1
+            l = l[1:len(l)]
+        for i in range(len(l)):
+            m +=int(l[i])*(10**i)
+        if m*h > (2**31)-1 or m*h < -2**31:
+            return 0
+        else:
+            return m*h
